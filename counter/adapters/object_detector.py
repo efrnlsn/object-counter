@@ -1,5 +1,4 @@
 import json
-from abc import ABC, abstractmethod
 from typing import List, BinaryIO
 
 import numpy as np
@@ -7,12 +6,7 @@ import requests
 from PIL import Image
 
 from counter.domain.models import Prediction, Box
-
-
-class ObjectDetector(ABC):
-    @abstractmethod
-    def predict(self, image: BinaryIO) -> List[Prediction]:
-        raise NotImplementedError
+from counter.domain.ports import ObjectDetector
 
 
 class FakeObjectDetector(ObjectDetector):
