@@ -6,7 +6,7 @@ import numpy as np
 import requests
 from PIL import Image
 
-from domain.models import Prediction, Box
+from counter.domain.models import Prediction, Box
 
 
 class ObjectDetector(ABC):
@@ -31,7 +31,7 @@ class TFSObjectDetector(ObjectDetector):
 
     @staticmethod
     def __build_classes_dict():
-        with open('adapters/mscoco_label_map.json') as json_file:
+        with open('counter/adapters/mscoco_label_map.json') as json_file:
             labels = json.load(json_file)
             return {label['id']: label['display_name'] for label in labels}
 

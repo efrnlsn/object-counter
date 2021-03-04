@@ -2,9 +2,9 @@ from typing import List
 
 from PIL import Image
 
-from adapters.object_detector import ObjectDetector
-from domain.models import Prediction
-from domain.utils import draw
+from counter.adapters.object_detector import ObjectDetector
+from counter.domain.models import Prediction
+from counter.domain.utils import draw
 
 
 class CountDetectedObjects:

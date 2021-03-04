@@ -8,7 +8,7 @@ def draw(predictions, image):
 
     image_width, image_height = image.size
 
-    font = ImageFont.truetype("adapters/arial.ttf", 12)
+    font = ImageFont.truetype("counter/adapters/arial.ttf", 20)
     i = 0
     for prediction in predictions:
         box = prediction.box
@@ -19,7 +19,7 @@ def draw(predictions, image):
         class_name = prediction.class_name
         draw_image.text(
             (box.xmin * image_width, box.ymin * image_height - font.getsize(class_name)[1]),
-            class_name, font=font, fill='red')
+            f"{class_name}: {prediction.score}", font=font, fill='black')
         i += 1
     try:
         os.mkdir('tmp/debug')
