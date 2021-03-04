@@ -8,7 +8,7 @@ def draw(predictions, image):
 
     image_width, image_height = image.size
 
-    font = ImageFont.truetype("counter/adapters/arial.ttf", 20)
+    font = ImageFont.truetype("counter/resources/arial.ttf", 20)
     i = 0
     for prediction in predictions:
         box = prediction.box
