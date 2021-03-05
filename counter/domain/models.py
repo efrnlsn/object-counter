@@ -14,3 +14,9 @@ class Prediction:
     class_name: str
     score: float
     box: Box
+
+
+@dataclass
+class ObjectCount(object):
+    object_class: str
+    count: int

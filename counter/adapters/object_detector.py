@@ -34,7 +34,6 @@ class TFSObjectDetector(ObjectDetector):
         predict_request = '{"instances" : %s}' % np.expand_dims(np_image, 0).tolist()
         response = requests.post(self.url, data=predict_request)
         predictions = response.json()['predictions'][0]
-        print(predictions)
         return self.__raw_predictions_to_domain(predictions)
 
     @staticmethod
