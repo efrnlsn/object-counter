@@ -6,6 +6,24 @@ from counter.domain.models import ObjectCount
 from counter.domain.ports import ObjectCountRepo
 
 
+class CountInMemoryRepo(ObjectCountRepo):
+
+    def __init__(self):
+        self.store = dict()
+
+    def read_values(self, object_classes: List[str]) -> List[ObjectCount]:
+        return [self.store.get(object_class) for object_class in object_classes]
+
+    def update_values(self, new_values: List[ObjectCount]):
+        for new_object_count in new_values:
+            key = new_object_count.object_class
+            try:
+                stored_object_count = self.store[key]
+                self.store[key] = ObjectCount(key, stored_object_count.count + new_object_count.count)
+            except KeyError:
+                self.store[key] = ObjectCount(key, new_object_count.count)
+
+
 class CountMongoDBRepo(ObjectCountRepo):
 
     def __init__(self, host, port, database):
