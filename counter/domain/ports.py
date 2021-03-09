@@ -12,5 +12,8 @@ class ObjectDetector(ABC):
 
 class ObjectCountRepo(ABC):
     @abstractmethod
-    def update(self, object_counts: List[ObjectCount]) -> Dict[str, ObjectCount]:
+    def read_values(self, object_classes: List[str]) -> List[ObjectCount]:
+        raise NotImplementedError
+
+    def update_values(self, new_values: List[ObjectCount]):
         raise NotImplementedError
