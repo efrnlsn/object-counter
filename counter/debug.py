@@ -3,7 +3,7 @@ import os
 from PIL import ImageDraw, ImageFont
 
 
-def draw(predictions, image):
+def draw(predictions, image, image_name):
     draw_image = ImageDraw.Draw(image, "RGBA")
 
     image_width, image_height = image.size
@@ -23,6 +23,6 @@ def draw(predictions, image):
         i += 1
     try:
         os.mkdir('tmp/debug')
-    except OSError as error:
+    except OSError:
         pass
-    image.save("tmp/debug/output.jpg", "JPEG")
+    image.save(f"tmp/debug/{image_name}", "JPEG")

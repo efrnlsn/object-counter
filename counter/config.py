@@ -9,7 +9,7 @@ def dev_count_action() -> CountDetectedObjects:
     return CountDetectedObjects(FakeObjectDetector(), CountInMemoryRepo())
 
 
-def prod_count_action():
+def prod_count_action() -> CountDetectedObjects:
     tfs_host = os.environ.get('TFS_HOST', 'localhost')
     tfs_port = os.environ.get('TFS_PORT', 8501)
     mongo_host = os.environ.get('MONGO_HOST', 'localhost')
@@ -19,7 +19,7 @@ def prod_count_action():
                                 CountMongoDBRepo(host=mongo_host, port=mongo_port, database=mongo_db))
 
 
-def get_count_action():
+def get_count_action() -> CountDetectedObjects:
     env = os.environ.get('ENV', 'dev')
     count_action_fn = f"{env}_count_action"
     return globals()[count_action_fn]()

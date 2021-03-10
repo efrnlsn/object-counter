@@ -15,7 +15,6 @@ class CountDetectedObjects:
 
     def execute(self, image, threshold) -> List[Prediction]:
         predictions = self.__find_valid_predictions(image, threshold)
-        self.__debug_image(image, predictions)
         object_counts = count(predictions)
         object_classes = list(map(lambda x: x.object_class, object_counts))
         self.__object_count_repo.update_values(object_counts)
@@ -24,12 +23,14 @@ class CountDetectedObjects:
         return predictions
 
     @staticmethod
-    def __debug_image(image, predictions):
+    def __debug_image(image, predictions, image_name):
         if __debug__:
             image = Image.open(image)
-            draw(predictions, image)
+            draw(predictions, image, image_name)
 
     def __find_valid_predictions(self, image, threshold):
         predictions = self.__object_detector.predict(image)
+        self.__debug_image(image, predictions, "all_predictions.jpg")
         predictions = list(over_threshold(predictions, threshold=threshold))
+        self.__debug_image(image, predictions, "valid_predictions.jpg")
         return predictions
