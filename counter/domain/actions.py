@@ -3,7 +3,7 @@ from typing import List
 from PIL import Image
 
 from counter.domain.ports import ObjectDetector, ObjectCountRepo
-from counter.domain.models import Prediction
+from counter.domain.models import Prediction, CountResponse
 from counter.debug import draw
 from counter.domain.predictions import over_threshold, count
 
@@ -16,11 +16,8 @@ class CountDetectedObjects:
     def execute(self, image, threshold) -> List[Prediction]:
         predictions = self.__find_valid_predictions(image, threshold)
         object_counts = count(predictions)
-        object_classes = list(map(lambda x: x.object_class, object_counts))
         self.__object_count_repo.update_values(object_counts)
-        print(self.__object_count_repo.read_values(object_classes))
-
-        return predictions
+        return CountResponse(current_objects=object_counts, total_objects=self.__object_count_repo.read_values())
 
     @staticmethod
     def __debug_image(image, predictions, image_name):
@@ -32,5 +29,5 @@ class CountDetectedObjects:
         predictions = self.__object_detector.predict(image)
         self.__debug_image(image, predictions, "all_predictions.jpg")
         predictions = list(over_threshold(predictions, threshold=threshold))
-        self.__debug_image(image, predictions, "valid_predictions.jpg")
+        self.__debug_image(image, predictions, f"valid_predictions_with_threshold_{threshold}.jpg")
         return predictions

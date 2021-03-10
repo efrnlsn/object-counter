@@ -12,7 +12,7 @@ class ObjectDetector(ABC):
 
 class ObjectCountRepo(ABC):
     @abstractmethod
-    def read_values(self, object_classes: List[str]) -> List[ObjectCount]:
+    def read_values(self, object_classes: List[str] = None) -> List[ObjectCount]:
         raise NotImplementedError
 
     def update_values(self, new_values: List[ObjectCount]):

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 
 @dataclass
@@ -17,6 +18,12 @@ class Prediction:
 
 
 @dataclass
-class ObjectCount(object):
+class ObjectCount:
     object_class: str
     count: int
+
+
+@dataclass
+class CountResponse:
+    current_objects: List[ObjectCount]
+    total_objects: List[ObjectCount]

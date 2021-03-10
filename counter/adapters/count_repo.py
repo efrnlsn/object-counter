@@ -11,7 +11,7 @@ class CountInMemoryRepo(ObjectCountRepo):
     def __init__(self):
         self.store = dict()
 
-    def read_values(self, object_classes: List[str]) -> List[ObjectCount]:
+    def read_values(self, object_classes: List[str] = None) -> List[ObjectCount]:
         return [self.store.get(object_class) for object_class in object_classes]
 
     def update_values(self, new_values: List[ObjectCount]):
@@ -37,9 +37,10 @@ class CountMongoDBRepo(ObjectCountRepo):
         counter_col = db.counter
         return counter_col
 
-    def read_values(self, object_classes: List[str]) -> List[ObjectCount]:
+    def read_values(self, object_classes: List[str]=None) -> List[ObjectCount]:
         counter_col = self.__get_counter_col()
-        counters = counter_col.find({"object_class": {"$in": object_classes}})
+        query = {"object_class": {"$in": object_classes}} if object_classes else None
+        counters = counter_col.find(query)
         object_counts = []
         for counter in counters:
             object_counts.append(ObjectCount(counter['object_class'], counter['count']))
