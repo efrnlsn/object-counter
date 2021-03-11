@@ -22,7 +22,7 @@ class CountDetectedObjects:
 
     @staticmethod
     def __debug_image(image, predictions, image_name):
-        if __debug__:
+        if __debug__ and image is not None:
             image = Image.open(image)
             draw(predictions, image, image_name)
 
