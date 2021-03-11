@@ -12,6 +12,9 @@ class CountInMemoryRepo(ObjectCountRepo):
         self.store = dict()
 
     def read_values(self, object_classes: List[str] = None) -> List[ObjectCount]:
+        if object_classes is None:
+            return list(self.store.values())
+
         return [self.store.get(object_class) for object_class in object_classes]
 
     def update_values(self, new_values: List[ObjectCount]):

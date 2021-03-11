@@ -21,9 +21,3 @@ def object_detection():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', debug=True)
-
-"""
-curl -F "threshold=0.9" \
-  -F "file=@/home/feed9001/work/spikes/object_detection_tfs/coco/val/val2017/000000010363.jpg" \
-  http://0.0.0.0:5000/object-count
-"""

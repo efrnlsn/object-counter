@@ -27,6 +27,8 @@ num_sockets=`lscpu | grep "Socket(s)" | cut -d':' -f2 | xargs`
 num_physical_cores=$((cores_per_socket * num_sockets))
 echo $num_physical_cores
 
+docker rm -f tfserving
+
 docker run \
     --name=tfserving \
     -d \
@@ -47,4 +49,40 @@ docker run \
 ```bash
 docker rm -f test-mongo
 docker run --name test-mongo --rm --net host -d mongo:latest
+```
+
+
+## Setup virtualenv
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Run the application
+
+### Using fakes
+```
+python -m counter.entrypoints.webapp
+```
+
+### Using real services in docker containers
+
+```
+ENV=prod python -m counter.entrypoints.webapp
+```
+
+## Call the service
+
+```shell script
+ curl -F "threshold=0.9" -F "file=@resources/images/boy.jpg" http://0.0.0.0:5000/object-count
+ curl -F "threshold=0.9" -F "file=@resources/images/cat.jpg" http://0.0.0.0:5000/object-count
+ curl -F "threshold=0.9" -F "file=@resources/images/food.jpg" http://0.0.0.0:5000/object-count
+```
+
+## Run the tests
+
+```
+pytest
 ```
