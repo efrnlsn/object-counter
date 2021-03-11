@@ -1,4 +1,9 @@
-The model used in this example has been taken from https://github.com/IntelAI/models/blob/master/docs/object_detection/tensorflow_serving/Tutorial.md
+# Machine Learning & Hexagonal Architecture
+
+The goal of this repo is demonstrate how to apply Hexagonal Architecture in a ML based system 
+
+The model used in this example has been taken from 
+[IntelAI](https://github.com/IntelAI/models/blob/master/docs/object_detection/tensorflow_serving/Tutorial.md)
 
 
 ## Download the model
@@ -36,3 +41,10 @@ docker run \
     
 ```
 
+
+## Run mongo 
+
+```bash
+docker rm -f test-mongo
+docker run --name test-mongo --rm --net host -d mongo:latest
+```
