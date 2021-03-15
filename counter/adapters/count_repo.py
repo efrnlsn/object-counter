@@ -40,7 +40,7 @@ class CountMongoDBRepo(ObjectCountRepo):
         counter_col = db.counter
         return counter_col
 
-    def read_values(self, object_classes: List[str]=None) -> List[ObjectCount]:
+    def read_values(self, object_classes: List[str] = None) -> List[ObjectCount]:
         counter_col = self.__get_counter_col()
         query = {"object_class": {"$in": object_classes}} if object_classes else None
         counters = counter_col.find(query)

@@ -1,4 +1,3 @@
-from io import BytesIO
 from unittest.mock import Mock
 
 import pytest
@@ -25,7 +24,7 @@ class TestCountDetectedObjects:
 
     def test_count_valid_predictions(self, object_detector, count_object_repo) -> None:
         response = CountDetectedObjects(object_detector, count_object_repo).execute(None, 0.5)
-        assert sorted( response.current_objects, key=lambda x: x.object_class) == \
+        assert sorted(response.current_objects, key=lambda x: x.object_class) == \
             [ObjectCount('cat', 2), ObjectCount('dog', 1), ObjectCount('rabbit', 1)]
 
     def test_update_count_object_repo(self, object_detector, count_object_repo):

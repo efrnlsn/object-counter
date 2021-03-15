@@ -15,5 +15,7 @@ class ObjectCountRepo(ABC):
     def read_values(self, object_classes: List[str] = None) -> List[ObjectCount]:
         raise NotImplementedError
 
+    @abstractmethod
     def update_values(self, new_values: List[ObjectCount]):
         raise NotImplementedError
+
