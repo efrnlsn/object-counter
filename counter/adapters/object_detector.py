@@ -26,7 +26,8 @@ class TFSObjectDetector(ObjectDetector):
 
     def predict(self, image: BinaryIO) -> List[Prediction]:
         np_image = self.__to_np_array(image)
-        predict_request = '{"instances" : %s}' % np.expand_dims(np_image, 0).tolist()
+        predict_request = '{"instances" : %s}' % np.expand_dims(np_image, 0).tolist()        
+        print(f"Sending request to TFS...{self.url}")
         response = requests.post(self.url, data=predict_request)
         predictions = response.json()['predictions'][0]
         return self.__raw_predictions_to_domain(predictions)
@@ -44,6 +45,7 @@ class TFSObjectDetector(ObjectDetector):
         return np.array(image_.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
 
     def __raw_predictions_to_domain(self, raw_predictions: dict) -> List[Prediction]:
+        print("Parsing raw predictions...")
         num_detections = int(raw_predictions.get('num_detections'))
         predictions = []
         for i in range(0, num_detections):
@@ -53,4 +55,5 @@ class TFSObjectDetector(ObjectDetector):
             detection_class = raw_predictions['detection_classes'][i]
             class_name = self.classes_dict[detection_class]
             predictions.append(Prediction(class_name=class_name, score=detection_score, box=box))
+        print(predictions)
         return predictions

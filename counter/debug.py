@@ -18,7 +18,7 @@ def draw(predictions, image, image_name):
             outline='red')
         class_name = prediction.class_name
         draw_image.text(
-            (box.xmin * image_width, box.ymin * image_height - font.getsize(class_name)[1]),
+            (box.xmin * image_width, box.ymin * image_height - font.getlength(class_name)),
             f"{class_name}: {prediction.score}", font=font, fill='black')
         i += 1
     try:
